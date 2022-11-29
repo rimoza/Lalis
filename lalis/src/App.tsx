@@ -45,30 +45,30 @@ function App() {
         <span className='text-xl font-bold'>01</span>
       </div>
       <div id='game-score' className='border border-success rounded-md px-5 flex justify-between items-center space-x-10'>
-        <div  className='bg-primary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
+        <div  className='bg-secondary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
         <span className=''>05</span>
         </div>
-        <div  className='bg-primary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
+        <div  className='bg-secondary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
         <span className=''>10</span>
         </div>
       </div>
       </div>
       <div id='bottom' className='flex justify-between mb-5'>
-      <div id='game-number' className='bg-primary btn border-none hover:bg-success'>
-        <span className='text-xl font-bold'>01</span>
+      <div id='game-number' className='bg-secondary btn border-none hover:bg-success'>
+        <span className='text-xl font-bold'>02</span>
       </div>
       <div id='game-score' className='border border-success rounded-md px-5 flex justify-between items-center space-x-10'>
-        <div  className='bg-primary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
+        <div  className='bg-success w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
         <span className=''>05</span>
         </div>
-        <div  className='bg-primary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
+        <div  className='bg-success w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
         <span className=''>10</span>
         </div>
       </div>
       </div>
       <div id='bottom' className='flex justify-between'>
-      <div id='game-number' className='bg-primary btn border-none hover:bg-success'>
-        <span className='text-xl font-bold'>01</span>
+      <div id='game-number' className='bg-accent btn border-none hover:bg-success'>
+        <span className='text-xl font-bold'>03</span>
       </div>
       <div id='game-score' className='border border-success rounded-md px-5 flex justify-between items-center space-x-10'>
         <div  className='bg-primary w-10 h-10 flex justify-center items-center text-white font-bold rounded-md'>
