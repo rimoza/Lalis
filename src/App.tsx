@@ -55,15 +55,15 @@ function App() {
   }
 
   return (
-    <div className='bg-gray-200 w-full flex justify-center'>
-      <div id='wrapper' className='bg-white px-5 py-5 my-5 rounded-md drop-shadow-md md:w-1/2'>
+    <div className='bg-dark w-full h-full flex justify-center text-white'>
+      <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
         <Top increaseValue={increment} decrease={decrease} guest={guest} home={home} />
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>
           </FinishButton>
         </div>
-      <Games userHistory = { userHistory} />
+        <Games userHistory={userHistory} />
       </div>
     </div>
   )
