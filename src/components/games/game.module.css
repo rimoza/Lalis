@@ -1,0 +1,18 @@
+.bottom {
+    @apply flex justify-between items-center mb-5
+};
+
+.game_number {
+   @apply bg-primary btn border-none hover:bg-success
+};
+
+.game_score_wrapper {
+    @apply border border-success rounded-md px-5 md:py-5 mt-3 flex justify-between items-center space-x-5;
+}
+
+.game_score {
+    @apply flex justify-center items-center;
+}
+.game_score_value {
+    @apply bg-secondary w-14 h-10 text-white text-3xl font-bold flex justify-center items-center rounded-md;
+}

@@ -28,7 +28,7 @@ function App() {
     };
   }
 
-  const decrease = (userType: UserType) => {
+  const decrement = (userType: UserType) => {
     if (userType === 'guest') {
       if (guest.value <= 0) {
         return
@@ -57,7 +57,7 @@ function App() {
   return (
     <div className='bg-dark w-full h-full flex justify-center text-white'>
       <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
-        <Top increaseValue={increment} decrease={decrease} guest={guest} home={home} />
+        <Top increaseValue={increment} decrement={decrement} guest={guest} home={home} />
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>

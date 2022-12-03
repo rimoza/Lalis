@@ -1,0 +1,11 @@
+.wrapper_bottom {
+    @apply border-2 border-secondary rounded-md px-5 py-10  mt-10;
+};
+
+.container {
+    @apply flex justify-center items-center ml-48 space-x-20;
+};
+
+.tilte_style {
+    @apply uppercase font-bold mb-1
+}

@@ -1,0 +1,11 @@
+.container {
+    @apply flex flex-col items-center space-y-5 border border-success p-5 rounded-md;
+};
+
+.value_wrapper {
+    @apply bg-white btn border-2 border-primary text-primary hover:text-white;
+};
+
+.icon {
+    @apply text-2xl text-white font-bold
+};
