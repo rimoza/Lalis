@@ -13,6 +13,9 @@
 .game_score {
     @apply flex justify-center items-center;
 }
+.game_score_value_guest {
+    @apply bg-success w-14 h-10 text-white text-3xl font-bold flex justify-center items-center rounded-md;
+}
 .game_score_value {
     @apply bg-secondary w-14 h-10 text-white text-3xl font-bold flex justify-center items-center rounded-md;
 }
