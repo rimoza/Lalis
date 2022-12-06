@@ -3,7 +3,7 @@ import FinishButton from "./components/buttons/finishButton";
 import Games from "./components/games/games";
 import React, { useState } from "react";
 
-type UserType = 'guest' | 'home'
+export type UserType = 'guest' | 'home'
 export declare interface IUser {
   title: UserType;
   value: number;
@@ -55,9 +55,9 @@ function App() {
   }
 
   return (
-    <div className='bg-dark w-full h-full flex justify-center text-white'>
+    <div className='bg-dark w-full min-h-screen flex justify-center text-white'>
       <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
-        <Top increaseValue={increment} decrement={decrement} guest={guest} home={home} />
+        <Top increment={increment} decrement={decrement} guest={guest} home={home} />
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>
