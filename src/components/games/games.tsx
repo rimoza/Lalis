@@ -3,24 +3,25 @@ import classes from './games.module.css'
 import React from 'react';
 import { IUserHistory } from '../../App';
 
-const Games = ({ userHistory } : {userHistory: IUserHistory[]}) => {
+const Games = ({ userHistory, onDelete }: { userHistory: IUserHistory[], onDelete: (item: IUserHistory) => void }) => {
+  const reversedHistory = [...userHistory].reverse();
   return (
     <div id='wrapper-bottom' className={classes.wrapper_bottom}>
-      {userHistory.length > 0 ? userHistory.map((users: any, index: any) => {
+      {userHistory.length > 0 ? reversedHistory.map((users: IUserHistory, index: number) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={users.no}>
             <div className='flex justify-around'>
               <div></div>
               <div className={classes.container}>
-                <span className={classes.title}>{users.guest.title}</span>
-                <span className={classes.title}>{users.home.title}</span>
+                <span className={classes.title}>GUEST</span>
+                <span className={classes.title}>HOME</span>
               </div>
             </div>
-            <Game users={users} key={index} />
+            <Game users={{ ...users, no: index + 1 }} key={index} onDelete={onDelete} />
           </React.Fragment>
         )
       }) :
-        <p className='text-white text-2xl text-center font-bold'>No Games to show</p>
+        <p className='text-white text-2xl text-center font-bold'>No games yet!</p>
       }
     </div>
   )
