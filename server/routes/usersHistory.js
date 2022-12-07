@@ -1,8 +1,8 @@
-const {UserHistory, validate} = require('../modals/userHistory');
-const {Guest} = require('../modals/guest');
-const {Home} = require('../modals/home');
-const Joi = require("joi");
 const express = require("express");
+const Joi = require("joi");
+const { Guest } = require('../modals/guest');
+const { Home } = require('../modals/home');
+const { UserHistory, validate } = require('../modals/userHistory');
 
 const router = express.Router();
 
@@ -13,24 +13,24 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
-  
+
   if (error)
     return res.status(400).send(error.details[0].message);
 
-    const guest = await Guest.findById(req.body.guestId);
-    if(!guest) return res.status(404).send('Guest user not found');
+  const guest = await Guest.findById(req.body.guestId);
+  if (!guest) return res.status(404).send('Guest user not found');
 
-    const home = await Home.findById(req.body.homeId);
-    if(!home) return res.status(404).send('Home user not found');
+  const home = await Home.findById(req.body.homeId);
+  if (!home) return res.status(404).send('Home user not found');
 
   const userHistory = new UserHistory({
     guest: {
-        _id: guest._id,
-        value: guest.value
+      _id: guest._id,
+      value: guest.value
     },
     home: {
-        _id: home._id,
-        value: home.value
+      _id: home._id,
+      value: home.value
     }
   });
 
