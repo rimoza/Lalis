@@ -1,48 +1,43 @@
 import React, { useState } from "react";
-import Top from "./components/top/top";
-import FinishButton from "./components/buttons/finishButton";
-import Games from "./components/games/games";
 
-export type UserType = 'guest' | 'home'
-export declare interface IUser {
+import Top from "./components/top/top";
+import Games from "./components/games/games";
+import FinishButton from "./components/buttons/finishButton";
+
+// Move types to types.ts.
+
+export type UserType = 'guest' | 'home';  // GameType
+
+export declare interface IUser {  // IGameScore
   title: UserType;
   value: number;
 }
-export declare interface IUserHistory {
+
+export declare interface IUserHistory {  // IGameHistory
   no: number;
-  guest: IUser;
-  home: IUser;
+  guest: IUser;  // guestScore: IGameScore;
+  home: IUser;  // homeScore: IGameScore;
 }
 
 function App() {
-  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
-  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
-  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
+  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });  // currentGuestScore
+  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });  // currentHomeScore
+  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);  // gameHistory
 
   const increment = (userType: UserType) => {
     if (userType === 'guest') {
       setGuest((prevState) => ({ ...prevState, value: guest.value + 1 }));
+      return;
     };
-    if (userType === 'home') {
-      setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
-    };
+    setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
   }
 
   const decrement = (userType: UserType) => {
     if (userType === 'guest') {
-      if (guest.value <= 0) {
-        return
-      } else {
-        setGuest((prevState) => ({ ...prevState, value: guest.value - 1 }));
-      }
+      setGuest((prevState) => ({ ...prevState, value: guest.value == 0 ? guest.value : guest.value - 1 }));
+      return;
     };
-    if (userType === 'home') {
-      if (home.value <= 0) {
-        return
-      } else {
-        setHome((prevState) => ({ ...prevState, value: home.value - 1 }));
-      }
-    };
+    setHome((prevState) => ({ ...prevState, value: home.value == 0 ? home.value : home.value - 1 }));
   }
 
   const finish = () => {
@@ -84,4 +79,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

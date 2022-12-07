@@ -4,12 +4,12 @@ import { IUser, UserType } from '../../App'
 import classes from './topLeft.module.css'
 import { AiFillCaretUp, AiFillCaretDown } from 'react-icons/ai'
 
-const TopLeft = ({ increment, decrement, guest }: { increment: (guest: UserType) => void, decrement: (guest: UserType) => void, guest: IUser }) => {
+const GameScore = ({ title, increment, decrement, guest }: { title: string, increment: (guest: UserType) => void, decrement: (guest: UserType) => void, guest: IUser }) => {
   return (
     <div id='topLeft' className={classes.container}>
-      <span className='uppercase font-bold'>{guest.title}</span>
+      <span className='uppercase font-bold'>{title.toUpperCase()}</span>
       <div>
-        <AddButton onClick={() => increment('guest')} >
+        <AddButton onClick={() => increment(title.toLowerCase())} >
           <AiFillCaretUp className={classes.icon} />
         </AddButton>
       </div>
@@ -17,7 +17,7 @@ const TopLeft = ({ increment, decrement, guest }: { increment: (guest: UserType)
         <span className='text-xl font-bold' >{guest.value}</span>
       </div>
       <div>
-        <SubButton onClick={() => decrement('guest')}>
+        <SubButton onClick={() => decrement(title.toLowerCase())}>
           <AiFillCaretDown className={classes.icon} />
         </SubButton>
       </div>
