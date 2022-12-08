@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import 'font-awesome/css/font-awesome.css';
 import Top from "./components/top/top";
 import FinishButton from "./components/buttons/finishButton";
 import Games from "./components/games/games";
+import Score from "./components/score";
 
 export type UserType = 'guest' | 'home'
 export declare interface IUser {
@@ -15,44 +17,44 @@ export declare interface IUserHistory {
 }
 
 function App() {
-  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
-  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
-  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
+  // const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
+  // const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
+  // const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
 
-  const increment = (userType: UserType) => {
-    if (userType === 'guest') {
-      setGuest((prevState) => ({ ...prevState, value: guest.value + 1 }));
-    };
-    if (userType === 'home') {
-      setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
-    };
-  }
+  // const increment = (userType: UserType) => {
+  //   if (userType === 'guest') {
+  //     setGuest((prevState) => ({ ...prevState, value: guest.value + 1 }));
+  //   };
+  //   if (userType === 'home') {
+  //     setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
+  //   };
+  // }
 
-  const decrement = (userType: UserType) => {
-    if (userType === 'guest') {
-      if (guest.value <= 0) {
-        return
-      } else {
-        setGuest((prevState) => ({ ...prevState, value: guest.value - 1 }));
-      }
-    };
-    if (userType === 'home') {
-      if (home.value <= 0) {
-        return
-      } else {
-        setHome((prevState) => ({ ...prevState, value: home.value - 1 }));
-      }
-    };
-  }
+  // const decrement = (userType: UserType) => {
+  //   if (userType === 'guest') {
+  //     if (guest.value <= 0) {
+  //       return
+  //     } else {
+  //       setGuest((prevState) => ({ ...prevState, value: guest.value - 1 }));
+  //     }
+  //   };
+  //   if (userType === 'home') {
+  //     if (home.value <= 0) {
+  //       return
+  //     } else {
+  //       setHome((prevState) => ({ ...prevState, value: home.value - 1 }));
+  //     }
+  //   };
+  // }
 
-  const finish = () => {
-    setUserHistory((prevState) => [
-      ...prevState,
-      { no: prevState.length, guest: guest, home: home },
-    ]);
-    setGuest({ title: 'guest', value: 0 });
-    setHome({ title: 'home', value: 0 });
-  }
+  // const finish = () => {
+  //   setUserHistory((prevState) => [
+  //     ...prevState,
+  //     { no: prevState.length, guest: guest, home: home },
+  //   ]);
+  //   setGuest({ title: 'guest', value: 0 });
+  //   setHome({ title: 'home', value: 0 });
+  // }
 
   const deleteHistoryItem = (item: IUserHistory) => {
     // Confirm delete from user.
@@ -69,10 +71,49 @@ function App() {
     }
   }
 
+  const [homeScore, setHomeScore] = useState(0)
+  const [guestScore, setGuestScore] = useState(0)
+  const [userHistory, setUserHistory] = useState<IUserHistory[]>([])
+
+  const increment = (isHome: boolean) => {
+    if (isHome) {
+      setHomeScore((prevState) => prevState + 1)
+    } else {
+      setGuestScore((prevState) => prevState + 1)
+    }
+  }
+  const decrement = (isHome: boolean) => {
+    if (isHome) {
+      if (homeScore <= 0) {
+        return
+      } else {
+        setHomeScore((prevState) => prevState - 1)
+      }
+    } else {
+      if (guestScore <= 0) {
+        return
+      } else {
+        setGuestScore((prevState) => prevState - 1)
+      }
+    }
+  }
+
+  const finish = () => {
+    setUserHistory((prevState) => [
+      ...prevState,
+      { no: prevState.length, guest: { title: 'guest', value: guestScore }, home: { title: 'home', value: homeScore } },
+    ]);
+    setHomeScore(0)
+    setGuestScore(0)
+  }
+
   return (
     <div className='bg-dark w-full min-h-screen flex justify-center text-white'>
       <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
-        <Top increment={increment} decrement={decrement} guest={guest} home={home} />
+        <div className="flex flex-row justify-between w-full">
+          <Score value={homeScore} isHome={true} increment={increment} decrement={decrement} />
+          <Score value={guestScore} isHome={false} increment={increment} decrement={decrement} />
+        </div>
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>
