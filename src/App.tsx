@@ -3,82 +3,72 @@ import Top from "./components/top/top";
 import FinishButton from "./components/buttons/finishButton";
 import Games from "./components/games/games";
 
-export type UserType = 'guest' | 'home'
-export declare interface IUser {
-  title: UserType;
+export type GameType = 'guest' | 'home'
+export declare interface IGameScore {
   value: number;
 }
-export declare interface IUserHistory {
+export declare interface IGameHistory { 
   no: number;
-  guest: IUser;
-  home: IUser;
+  guestScore: IGameScore;
+  homeScore: IGameScore;
 }
 
 function App() {
-  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
-  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
-  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
+  const [currentHomeScore, setCurrentHomeScore] = useState<IGameScore>({ value: 0 });
+  const [currentGuestScore, setCurrentGuestScore] = useState<IGameScore>({ value: 0 });
+  const [gameHistory, setGameHistory] = useState<IGameHistory[]>([]);
 
-  const increment = (userType: UserType) => {
-    if (userType === 'guest') {
-      setGuest((prevState) => ({ ...prevState, value: guest.value + 1 }));
+  const increment = (GameType: GameType) => {
+    if (GameType === 'guest') {
+      setCurrentGuestScore((prevState) => ({ ...prevState, value: currentGuestScore.value + 1 }));
     };
-    if (userType === 'home') {
-      setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
+    if (GameType === 'home') {
+      setCurrentGuestScore((prevState) => ({ ...prevState, value: currentHomeScore.value + 1 }));
     };
   }
 
-  const decrement = (userType: UserType) => {
-    if (userType === 'guest') {
-      if (guest.value <= 0) {
+  const decrement = (GameType: GameType) => {
+    if (GameType === 'home') {
+        setCurrentGuestScore((prevState) => ({ ...prevState,  value: currentHomeScore.value == 0 ? currentHomeScore.value : currentHomeScore.value - 1}));
         return
-      } else {
-        setGuest((prevState) => ({ ...prevState, value: guest.value - 1 }));
-      }
     };
-    if (userType === 'home') {
-      if (home.value <= 0) {
-        return
-      } else {
-        setHome((prevState) => ({ ...prevState, value: home.value - 1 }));
-      }
-    };
-  }
+     setCurrentGuestScore((prevState) => ({ ...prevState, value: currentHomeScore.value == 0 ? currentGuestScore.value : currentGuestScore.value - 1 }));
+  };
 
   const finish = () => {
-    setUserHistory((prevState) => [
+    setGameHistory((prevState) => [
       ...prevState,
-      { no: prevState.length, guest: guest, home: home },
+      { no: prevState.length, homeScore: currentHomeScore, guestScore: currentGuestScore },
     ]);
-    setGuest({ title: 'guest', value: 0 });
-    setHome({ title: 'home', value: 0 });
+    setCurrentHomeScore({ value: 0 });
+    setCurrentGuestScore({ value: 0 });
   }
 
-  const deleteHistoryItem = (item: IUserHistory) => {
+  const deleteHistoryItem = (item: IGameHistory) => {
     // Confirm delete from user.
     const confirmDelete = window.confirm('Are you sure you want to delete this game?');
     if (confirmDelete) {
       // Only one item in the history.
-      if (userHistory.length === 1) {
-        setUserHistory([]);
+      if (gameHistory.length === 1) {
+        setGameHistory([]);
         return
       }
-      const newHistory = [...userHistory];
+      const newHistory = [...gameHistory];
       newHistory.splice(item.no - 1, 1);
-      setUserHistory(newHistory);
-    }
-  }
-
+      setGameHistory(newHistory);
+    };
+  };
+  
   return (
     <div className='bg-dark w-full min-h-screen flex justify-center text-white'>
-      <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
-        <Top increment={increment} decrement={decrement} guest={guest} home={home} />
+      <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-4xl border-2 border-white'>
+        <Top increment={increment} decrement={decrement} home={currentHomeScore}  guest={currentGuestScore} />
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>
           </FinishButton>
         </div>
-        <Games userHistory={userHistory} onDelete={deleteHistoryItem} />
+        <Games gameHistory={gameHistory} onDelete={deleteHistoryItem} />
       </div>
     </div>
   )
