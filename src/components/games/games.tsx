@@ -9,16 +9,7 @@ const Games = ({ userHistory, onDelete }: { userHistory: IUserHistory[], onDelet
     <div id='wrapper-bottom' className={classes.wrapper_bottom}>
       {userHistory.length > 0 ? reversedHistory.map((users: IUserHistory, index: number) => {
         return (
-          <React.Fragment key={users.no}>
-            <div className='flex justify-around'>
-              <div></div>
-              <div className={classes.container}>
-                <span className={classes.title}>GUEST</span>
-                <span className={classes.title}>HOME</span>
-              </div>
-            </div>
-            <Game users={{ ...users, no: index + 1 }} key={index} onDelete={onDelete} />
-          </React.Fragment>
+          <Game users={{ ...users, no: index + 1 }} key={index} onDelete={onDelete} />
         )
       }) :
         <p className='text-white text-2xl text-center font-bold'>No games yet!</p>
