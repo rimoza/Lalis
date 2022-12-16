@@ -64,7 +64,7 @@ function App() {
         return
       }
       const newHistory = [...userHistory];
-      newHistory.splice(item.no - 1, 1);
+      newHistory.splice(item.no, 1);
       setUserHistory(newHistory);
     }
   }

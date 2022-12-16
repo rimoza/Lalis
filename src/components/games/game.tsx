@@ -9,7 +9,7 @@ const Game = ({ users, onDelete }: { users: IUserHistory, onDelete: (item: IUser
     <React.Fragment>
       <div id='bottom' className={classes.bottom}>
         <div id='game-number' className={classes.game_number}>
-          <span className='text-xl font-bold'>{no}</span>
+          <span className='text-xl font-bold'>{no + 1}</span>
         </div>
         <div id='game-number' className='bg-warning btn border-none hover:bg-success' onClick={() => onDelete(users)}>
           <span className='text-xl font-bold'>X</span>
