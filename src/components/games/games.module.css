@@ -1,5 +1,5 @@
 .wrapper_bottom {
-    @apply border-2 border-secondary rounded-md px-5 py-10  mt-10;
+    @apply border-2 border-secondary rounded-md px-5 py-10 mt-10;
 };
 
 .container {
