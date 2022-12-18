@@ -7,7 +7,7 @@
 };
 
 .game_score_wrapper {
-    @apply border border-success rounded-md px-5 md:py-5 mt-3 flex justify-between items-center space-x-5;
+    @apply border border-success rounded-md px-1 py-1 flex justify-between items-center space-x-5;
 }
 
 .game_score {

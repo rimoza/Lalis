@@ -14,9 +14,10 @@ export declare interface IGameHistory {
 }
 
 function App() {
-  const [currentHomeScore, setCurrentHomeScore] = useState<IGameScore>({ value: 0 });
-  const [currentGuestScore, setCurrentGuestScore] = useState<IGameScore>({ value: 0 });
-  const [gameHistory, setGameHistory] = useState<IGameHistory[]>([]);
+  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
+  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
+  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
+  const [message, setMessage] = useState<string>('');
 
   const increment = (GameType: GameType) => {
     if (GameType === 'guest') {
@@ -36,12 +37,20 @@ function App() {
   };
 
   const finish = () => {
-    setGameHistory((prevState) => [
+    // Check for 0-0 score.
+    if (guest.value === 0 && home.value === 0) {
+      setMessage('Please enter a score.');
+      return
+    }
+    
+    setUserHistory((prevState) => [
       ...prevState,
-      { no: prevState.length, homeScore: currentHomeScore, guestScore: currentGuestScore },
-    ]);
-    setCurrentHomeScore({ value: 0 });
-    setCurrentGuestScore({ value: 0 });
+      { no: 0, guest: guest, home: home },
+    ].map((item, index) => ({ ...item, no: index })));
+    setGuest({ title: 'guest', value: 0 });
+    setHome({ title: 'home', value: 0 });
+    setMessage('');
+
   }
 
   const deleteHistoryItem = (item: IGameHistory) => {
@@ -52,17 +61,21 @@ function App() {
       if (gameHistory.length === 1) {
         setGameHistory([]);
         return
-      }
-      const newHistory = [...gameHistory];
-      newHistory.splice(item.no - 1, 1);
-      setGameHistory(newHistory);
-    };
-  };
-  
+      };
+      
+      console.log('userHistory:', userHistory)
+      debugger;
+      const newHistory = userHistory.filter(uh => uh.no !== item.no);
+      setUserHistory(newHistory);
+    }
+  }
+
   return (
     <div className='bg-dark w-full min-h-screen flex justify-center text-white'>
-      <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-4xl border-2 border-white'>
-        <Top increment={increment} decrement={decrement} home={currentHomeScore}  guest={currentGuestScore} />
+      <div id='wrapper' className='px-5 py-5 my-5 rounded-md drop-shadow-md'>
+        <Top increment={increment} decrement={decrement} guest={guest} home={home} />
+        {message && <p className='text-center text-2xl font-bold'>{message}</p>}
+
         <div id='divider'>
           <FinishButton onClick={finish}>
             <span>Finish</span>
