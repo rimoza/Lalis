@@ -5,6 +5,7 @@ import Games from "./components/games/games";
 
 export type GameType = 'guest' | 'home'
 export declare interface IGameScore {
+  title: GameType;
   value: number;
 }
 export declare interface IGameHistory { 
@@ -14,26 +15,25 @@ export declare interface IGameHistory {
 }
 
 function App() {
-  const [guest, setGuest] = useState<IUser>({ title: 'guest', value: 0 });
-  const [home, setHome] = useState<IUser>({ title: 'home', value: 0 });
-  const [userHistory, setUserHistory] = useState<IUserHistory[]>([]);
+  const [guest, setGuest] = useState<IGameScore>({ title: 'guest', value: 0 });
+  const [home, setHome] = useState<IGameScore>({ title: 'home', value: 0 });
+  const [gameHistory, setGameHistory] = useState<IGameHistory[]>([]);
   const [message, setMessage] = useState<string>('');
 
   const increment = (GameType: GameType) => {
     if (GameType === 'guest') {
-      setCurrentGuestScore((prevState) => ({ ...prevState, value: currentGuestScore.value + 1 }));
+      setGuest((prevState) => ({ ...prevState, value: guest.value + 1 }));
+      return
     };
-    if (GameType === 'home') {
-      setCurrentGuestScore((prevState) => ({ ...prevState, value: currentHomeScore.value + 1 }));
-    };
+      setHome((prevState) => ({ ...prevState, value: home.value + 1 }));
   }
 
   const decrement = (GameType: GameType) => {
-    if (GameType === 'home') {
-        setCurrentGuestScore((prevState) => ({ ...prevState,  value: currentHomeScore.value == 0 ? currentHomeScore.value : currentHomeScore.value - 1}));
+    if (GameType === 'guest') {
+        setGuest((prevState) => ({ ...prevState,  value: home.value == 0 ? home.value : home.value - 1}));
         return
     };
-     setCurrentGuestScore((prevState) => ({ ...prevState, value: currentHomeScore.value == 0 ? currentGuestScore.value : currentGuestScore.value - 1 }));
+     setHome((prevState) => ({ ...prevState, value: home.value == 0 ? guest.value : guest.value - 1 }));
   };
 
   const finish = () => {
@@ -43,14 +43,12 @@ function App() {
       return
     }
     
-    setUserHistory((prevState) => [
+  setGameHistory((prevState) => [
       ...prevState,
-      { no: 0, guest: guest, home: home },
     ].map((item, index) => ({ ...item, no: index })));
     setGuest({ title: 'guest', value: 0 });
     setHome({ title: 'home', value: 0 });
     setMessage('');
-
   }
 
   const deleteHistoryItem = (item: IGameHistory) => {
@@ -63,10 +61,10 @@ function App() {
         return
       };
       
-      console.log('userHistory:', userHistory)
+      console.log('userHistory:', gameHistory)
       debugger;
-      const newHistory = userHistory.filter(uh => uh.no !== item.no);
-      setUserHistory(newHistory);
+      const newHistory = gameHistory.filter(uh => uh.no !== item.no);
+      setGameHistory(newHistory);
     }
   }
 
